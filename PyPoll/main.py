@@ -1,42 +1,32 @@
 import csv
+import os
+from collections import Counter
 
-# Function to analyze election data
+# Specify the path to the CSV file
+file_path = os.path.join(r'C:\Users\Ro\Documents\BootCamp\Tareas\Modulo 3\phyton-challengue\PyPoll\Resources', 'election_data.csv')
+
 def analyze_election_data(file_path):
-    # Initialize variables
+    # Rest of your code remains unchanged
     total_votes = 0
-    candidates = {}
-    
-    # Read the CSV file
+    candidates = Counter()
+
     with open(file_path, newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=',')
         
-        # Skip the header row
-        next(csvreader)
+        next(csvreader)  # Skip the header row
 
-        # Loop through each row in the CSV
         for row in csvreader:
-            # Extract candidate information
             candidate = row[2]
-
-            # Update total votes
             total_votes += 1
+            candidates.update([candidate])
 
-            # Update candidate votes
-            if candidate in candidates:
-                candidates[candidate] += 1
-            else:
-                candidates[candidate] = 1
+    winner = candidates.most_common(1)[0][0]
 
-    # Determine the winner
-    winner = max(candidates, key=candidates.get)
-
-    # Display results
     print("Election Results")
     print("-------------------------")
     print(f"Total Votes: {total_votes}")
     print("-------------------------")
-    
-    # Display each candidate's results
+
     for candidate, votes in candidates.items():
         percentage = (votes / total_votes) * 100
         print(f"{candidate}: {percentage:.3f}% ({votes})")
@@ -45,14 +35,12 @@ def analyze_election_data(file_path):
     print(f"Winner: {winner}")
     print("-------------------------")
 
-    # Save results to a text file
     with open("election_results.txt", "w") as text_file:
         text_file.write("Election Results\n")
         text_file.write("-------------------------\n")
         text_file.write(f"Total Votes: {total_votes}\n")
         text_file.write("-------------------------\n")
-        
-        # Write each candidate's results to the text file
+
         for candidate, votes in candidates.items():
             percentage = (votes / total_votes) * 100
             text_file.write(f"{candidate}: {percentage:.3f}% ({votes})\n")
@@ -62,7 +50,7 @@ def analyze_election_data(file_path):
         text_file.write("-------------------------\n")
 
 # Specify the path to the CSV file
-file_path = "path/to/election_data.csv"
+# file_path = "path/to/election_data.csv"
 
 # Call the function with the file path
 analyze_election_data(file_path)

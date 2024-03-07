@@ -1,18 +1,19 @@
 import csv
 import os
-file_path = os.path.join("Resources", "budget_data.csv")
+
+file_path = os.path.join(r'C:\Users\Ro\Documents\BootCamp\Tareas\Modulo 3\phyton-challengue\PyBank\Resources', 'budget_data.csv')
 
 # Function to analyze financial records
-def analyze_financial_records(file_path):
+def analyze_financial_records(csvdata):
     # Initialize variables
     total_months = 0
     net_total = 0
     previous_profit_loss = 0
-    profit_loss_changes = ()
-    dates = ()
+    profit_loss_changes = []  # Change to list
+    dates = []  # Change to list
 
     # Read the CSV file
-    with open(file_path) as csvfile:
+    with open(csvdata) as csvfile:
         csvreader = csv.reader(csvfile, delimiter=',')
         
         # Skip the header row
@@ -55,8 +56,18 @@ def analyze_financial_records(file_path):
     print(f"Greatest Increase in Profits: {greatest_increase_date} (${greatest_increase})")
     print(f"Greatest Decrease in Profits: {greatest_decrease_date} (${greatest_decrease})")
 
-# Specify the path to the CSV file
-file_path = os.path.join("Resources", "budget_data.csv")
+    # Save results to a text file
+    write_results_to_file("financial_results.txt", total_months, net_total, average_change, greatest_increase_date, greatest_increase, greatest_decrease_date, greatest_decrease)
+
+def write_results_to_file(file_name, total_months, net_total, average_change, greatest_increase_date, greatest_increase, greatest_decrease_date, greatest_decrease):
+    with open(file_name, "w") as text_file:
+        text_file.write("Financial Analysis\n")
+        text_file.write("------------------\n")
+        text_file.write(f"Total Months: {total_months}\n")
+        text_file.write(f"Total: ${net_total}\n")
+        text_file.write(f"Average Change: ${round(average_change, 2)}\n")
+        text_file.write(f"Greatest Increase in Profits: {greatest_increase_date} (${greatest_increase})\n")
+        text_file.write(f"Greatest Decrease in Profits: {greatest_decrease_date} (${greatest_decrease})\n")
 
 # Call the function with the file path
 analyze_financial_records(file_path)
