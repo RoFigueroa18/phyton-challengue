@@ -1,6 +1,7 @@
 HW for DataBootCamp Module 3
 
 PyBank
+
 This Python script imports the necessary libraries (csv and os) and defines a function (analyze_financial_records) to analyze financial records from a CSV file. The script reads a CSV file containing financial data, calculates various financial metrics, and prints the results to the console. It also writes the results to a text file named "financial_results.txt."
 
 Here's a step-by-step explanation of the code:
